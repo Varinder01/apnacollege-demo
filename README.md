@@ -32,4 +32,26 @@ export class RatingPipe implements PipeTransform {
     // Construct the star string based on full, half, and empty stars
     return '★'.repeat(fullStars) + (hasHalfStar ? '☆' : '') + '☆'.repeat(emptyStars);
   }
+} 
+
+
+import {Directive, ElementRef, HostListener, Input} from '@angular/core';
+
+@Directive({
+  standalone: true,
+  selector: '[appHoverDirective]'
+})
+export class HoverDirectiveDirective {
+  @Input() appHoverHighlight = '';
+  constructor(private el: ElementRef) {}
+
+  @HostListener('mouseenter') onMouseEnter() {
+    this.highlight(this.appHoverHighlight || 'yellow');
+  }
+  @HostListener('mouseleave') onMouseLeave() {
+    this.highlight('');
+  }
+  private highlight(color: string) {
+    this.el.nativeElement.style.backgroundColor = color;
+  }
 }
